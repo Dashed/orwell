@@ -8,6 +8,9 @@
 $ npm install --save orwell
 ```
 
+## Inspiration
+
+`orwell` has been inspired by `connectToStores` code written by [@gaearon](https://github.com/gaearon) in his article promoting usage of Higher-order components: https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750
 
 ## License
 
