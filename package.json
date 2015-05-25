@@ -25,6 +25,7 @@
   "dependencies": {
     "lodash.assign": "^3.2.0",
     "lodash.isarray": "^3.0.3",
+    "lodash.isequal": "^3.0.4",
     "lodash.isfunction": "^3.0.5",
     "lodash.isplainobject": "^3.1.0"
   },
