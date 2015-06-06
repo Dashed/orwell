@@ -56,6 +56,14 @@ function orwell(Component, watchCursors = DO_NOTHING, __assignNewProps = DEFAULT
         __assignNewProps = Component.assignNewProps;
     }
 
+    if(!isFunction(watchCursors)) {
+        watchCursors = DO_NOTHING;
+    }
+
+    if(!isFunction(__assignNewProps)) {
+        __assignNewProps = DEFAULT_ASSIGN;
+    }
+
     let __shouldComponentUpdate = __shouldComponentUpdateShallow;
 
     const OrwellContainer = React.createClass({
