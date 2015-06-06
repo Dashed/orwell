@@ -192,21 +192,11 @@ function cursorCompare(valueA, valueB) {
         return void 0;
     }
 
-    if(!isEqual(valueA.path(), valueB.path())) {
+    if(!isEqual(valueA.path(), valueB.path(), cursorCompare)) {
         return false;
     }
 
-    const options = valueA.options();
-    const boxed = options.getIn(['root', 'data']);
-
-    const newOptions = options.setIn(['root', 'data'], {
-        map: boxed.previousMap
-    });
-
-    // quick create
-    const cursor = new Probe(newOptions, true, true);
-
-    return(cursor.deref() === valueB.deref());
+    return(valueA.deref() === valueB.deref());
 }
 
 function __shouldComponentUpdateShallow(nextProps, nextState) {
