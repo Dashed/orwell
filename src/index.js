@@ -68,8 +68,8 @@ function orwell(Component, watchCursors = DO_NOTHING, __assignNewProps = DEFAULT
 
     const OrwellContainer = React.createClass({
 
-        assignNewProps() {
-            const ret = __assignNewProps.call(null, this.props);
+        assignNewProps(props) {
+            const ret = __assignNewProps.call(null, props);
             return isPlainObject(ret) ? ret : {};
         },
 
@@ -77,7 +77,7 @@ function orwell(Component, watchCursors = DO_NOTHING, __assignNewProps = DEFAULT
         // any of those cursors change in some way.
         handleCursorChanged() {
             this.setState({
-                currentProps: assign({}, this.props, this.assignNewProps())
+                currentProps: assign({}, this.props, this.assignNewProps(this.props))
             });
         },
 
@@ -108,7 +108,7 @@ function orwell(Component, watchCursors = DO_NOTHING, __assignNewProps = DEFAULT
                 // these functions, when called, handle the clean up step in removing
                 // listeners from Probe cursors.
                 unsubs: [],
-                currentProps: assign({}, this.props, this.assignNewProps())
+                currentProps: assign({}, this.props, this.assignNewProps(this.props))
             };
         },
 
@@ -119,7 +119,7 @@ function orwell(Component, watchCursors = DO_NOTHING, __assignNewProps = DEFAULT
         componentWillReceiveProps(nextProps) {
             if (!shallowEqual(this.props, nextProps, cursorCompare)) {
                 this.setState({
-                    currentProps: assign({}, this.props, this.assignNewProps())
+                    currentProps: assign({}, nextProps, this.assignNewProps(nextProps))
                 });
             }
         },
