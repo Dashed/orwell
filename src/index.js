@@ -52,15 +52,16 @@ function orwell(Component, watchCursors = DO_NOTHING, __assignNewProps = DEFAULT
     if (isFunction(Component.watchCursors)) {
         watchCursors = Component.watchCursors;
     }
+
     if (isFunction(Component.assignNewProps)) {
         __assignNewProps = Component.assignNewProps;
     }
 
-    if(!isFunction(watchCursors)) {
+    if (!isFunction(watchCursors)) {
         watchCursors = DO_NOTHING;
     }
 
-    if(!isFunction(__assignNewProps)) {
+    if (!isFunction(__assignNewProps)) {
         __assignNewProps = DEFAULT_ASSIGN;
     }
 
@@ -113,15 +114,13 @@ function orwell(Component, watchCursors = DO_NOTHING, __assignNewProps = DEFAULT
         },
 
         shouldComponentUpdate(nextProps, nextState) {
-            return(__shouldComponentUpdate.call(this, nextProps, nextState));
+            return __shouldComponentUpdate.call(this, nextProps, nextState);
         },
 
         componentWillReceiveProps(nextProps) {
-            if (!shallowEqual(this.props, nextProps, cursorCompare)) {
-                this.setState({
-                    currentProps: assign({}, nextProps, this.assignNewProps(nextProps))
-                });
-            }
+            this.setState({
+                currentProps: assign({}, nextProps, this.assignNewProps(nextProps))
+            });
         },
 
         componentWillMount() {
@@ -186,7 +185,7 @@ function orwell(Component, watchCursors = DO_NOTHING, __assignNewProps = DEFAULT
         },
 
         render() {
-            return(<Component {...this.state.currentProps} />);
+            return (<Component {...this.state.currentProps} />);
         }
     });
 
@@ -200,19 +199,15 @@ function cursorCompare(valueA, valueB) {
         return void 0;
     }
 
-    if(!isEqual(valueA.path(), valueB.path(), cursorCompare)) {
-        return false;
-    }
-
-    return(valueA.deref() === valueB.deref());
+    return valueA.deref() === valueB.deref();
 }
 
 function __shouldComponentUpdateShallow(nextProps, nextState) {
-    return(!shallowEqual(this.state.currentProps, nextState.currentProps, cursorCompare));
+    return !shallowEqual(this.state.currentProps, nextState.currentProps, cursorCompare);
 }
 
 function __shouldComponentUpdateDeep(nextProps, nextState) {
-    return(!isEqual(this.state.currentProps, nextState.currentProps, cursorCompare));
+    return !isEqual(this.state.currentProps, nextState.currentProps, cursorCompare);
 }
 
 // TODO: refactor this to somewhere else; maybe ./utils
