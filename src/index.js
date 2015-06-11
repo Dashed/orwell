@@ -66,8 +66,8 @@ function orwell(Component, watchCursors = DO_NOTHING, __assignNewProps = DEFAULT
     }
 
     let __shouldComponentUpdate = __shouldComponentUpdateShallow;
-
-    const OrwellContainer = React.createClass({
+    let OrwellContainer;
+    let classSpec = {
 
         assignNewProps(props) {
             const ret = __assignNewProps.call(null, props);
@@ -99,6 +99,16 @@ function orwell(Component, watchCursors = DO_NOTHING, __assignNewProps = DEFAULT
             },
             deep: function() {
                 __shouldComponentUpdate = __shouldComponentUpdateDeep;
+                return OrwellContainer;
+            },
+            inject: function(spec = {}) {
+
+                if(isFunction(spec)) {
+                    spec = spec(assign({}, classSpec));
+                }
+
+                classSpec = assign({}, classSpec, spec);
+                OrwellContainer = React.createClass(classSpec);
                 return OrwellContainer;
             }
         },
@@ -187,7 +197,9 @@ function orwell(Component, watchCursors = DO_NOTHING, __assignNewProps = DEFAULT
         render() {
             return (<Component {...this.state.currentProps} />);
         }
-    });
+    };
+
+    OrwellContainer = React.createClass(classSpec);
 
     return OrwellContainer;
 }
