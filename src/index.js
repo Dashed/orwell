@@ -69,8 +69,8 @@ function orwell(Component, watchCursors = DO_NOTHING, __assignNewProps = DEFAULT
     let OrwellContainer;
     let classSpec = {
 
-        assignNewProps(props) {
-            const ret = __assignNewProps.call(null, props);
+        assignNewProps(props, context) {
+            const ret = __assignNewProps.call(null, props, context);
             return isPlainObject(ret) ? ret : {};
         },
 
@@ -78,7 +78,7 @@ function orwell(Component, watchCursors = DO_NOTHING, __assignNewProps = DEFAULT
         // any of those cursors change in some way.
         handleCursorChanged() {
             this.setState({
-                currentProps: assign({}, this.props, this.assignNewProps(this.props))
+                currentProps: assign({}, this.props, this.assignNewProps(this.props, this.context))
             });
         },
 
@@ -116,10 +116,10 @@ function orwell(Component, watchCursors = DO_NOTHING, __assignNewProps = DEFAULT
         getInitialState() {
             return {
                 // array of functions to be called when OrwellContainer unmounts.
-                // these functions, when called, handle the clean up step in removing
+                // these functions, when called, handle the cleanup step in removing
                 // listeners from Probe cursors.
                 unsubs: [],
-                currentProps: assign({}, this.props, this.assignNewProps(this.props))
+                currentProps: assign({}, this.props, this.assignNewProps(this.props, this.context))
             };
         },
 
@@ -127,9 +127,9 @@ function orwell(Component, watchCursors = DO_NOTHING, __assignNewProps = DEFAULT
             return __shouldComponentUpdate.call(this, nextProps, nextState);
         },
 
-        componentWillReceiveProps(nextProps) {
+        componentWillReceiveProps(nextProps, nextContext) {
             this.setState({
-                currentProps: assign({}, nextProps, this.assignNewProps(nextProps))
+                currentProps: assign({}, nextProps, this.assignNewProps(nextProps, nextContext))
             });
         },
 
