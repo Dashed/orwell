@@ -65,6 +65,7 @@ function orwell(Component, watchCursors = DO_NOTHING, __assignNewProps = DEFAULT
         __assignNewProps = DEFAULT_ASSIGN;
     }
 
+    let debug = false;
     let __shouldComponentUpdate = __shouldComponentUpdateShallow;
     let OrwellContainer;
     let classSpec = {
@@ -110,6 +111,10 @@ function orwell(Component, watchCursors = DO_NOTHING, __assignNewProps = DEFAULT
                 classSpec = assign({}, classSpec, spec);
                 OrwellContainer = React.createClass(classSpec);
                 return OrwellContainer;
+            },
+            debug: function(val = true) {
+                debug = val;
+                return OrwellContainer;
             }
         },
 
@@ -134,6 +139,7 @@ function orwell(Component, watchCursors = DO_NOTHING, __assignNewProps = DEFAULT
         },
 
         componentWillMount() {
+            let numberSubscribers = 0;
             let unsubs = [];
 
             /**
@@ -154,6 +160,9 @@ function orwell(Component, watchCursors = DO_NOTHING, __assignNewProps = DEFAULT
              * function to induce a re-render.
              */
             const manual = (fn) => {
+
+                numberSubscribers++;
+
                 const cleanup = fn.call(null, this.handleCursorChanged);
                 if(cleanup && isFunction(cleanup)) {
                     unsubs.push(cleanup);
@@ -173,12 +182,19 @@ function orwell(Component, watchCursors = DO_NOTHING, __assignNewProps = DEFAULT
             }
 
             if(isArray(cursorsToWatch)) {
+
+                numberSubscribers += cursorsToWatch.length;
+
                 for(const cursor of cursorsToWatch) {
                     const unsub = cursor.observe(_ => {
                         this.handleCursorChanged();
                     });
                     unsubs.push(unsub);
                 }
+            }
+
+            if(debug && unsubs.length != numberSubscribers) {
+                console.warn(`Expected at least ${numberSubscribers} observers. Only received ${unsubs.length} cleanup functions for these observers.`);
             }
 
             // NOTE: `render()` will see the updated state and will be executed
