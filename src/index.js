@@ -38,7 +38,7 @@ const isArray = require('lodash.isarray');
 const isPlainObject = require('lodash.isplainobject');
 const assign = require('lodash.assign');
 const isEqual = require('lodash.isequal');
-const Probe = require('minitrue').Probe;
+const Probe = require('probe');
 
 const NOT_SET = {};
 const DO_NOTHING = _ => void 0;
