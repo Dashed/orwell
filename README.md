@@ -1,4 +1,4 @@
-# orwell [![Build Status](https://travis-ci.org/Dashed/orwell.svg)](https://travis-ci.org/Dashed/orwell)
+# orwell
 
 > `orwell` is a higher-order component that can listen to [Probe](https://github.com/Dashed/probe) cursors for changes, and re-renders the wrapped component whenever any cursor emits a change.
 
