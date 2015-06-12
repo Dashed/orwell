@@ -172,7 +172,7 @@ function orwell(Component, watchCursors = DO_NOTHING, __assignNewProps = DEFAULT
             // watchCursors may return either a single cursor or an array of cursors.
             // These cursors are designated to be observed, and when an event change
             // has occured at these cursors, this component shall update.
-            let cursorsToWatch = watchCursors.call(null, this.props, manual);
+            let cursorsToWatch = watchCursors.call(null, this.props, manual, this.context);
 
             // TODO: support cursorsToWatch that may be a promise.
 
