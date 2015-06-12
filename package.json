@@ -1,6 +1,6 @@
 {
   "name": "orwell",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Higher-order component that can listen to Probe cursors for changes, and update the component whenever any cursor emit a change.",
   "main": "modules/index.js",
   "scripts": {
