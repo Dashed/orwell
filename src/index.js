@@ -76,7 +76,7 @@ function __shouldComponentUpdateDeep(nextProps, nextState) {
 
 let __shouldComponentUpdateGlobal = __shouldComponentUpdateShallow;
 
-module.exports = function orwell(Component, orwellSpec) {
+const orwell = function(Component, orwellSpec) {
 
     let watchCursors = orwellSpec.watchCursors || null;
     let shouldRewatchCursors = orwellSpec.shouldRewatchCursors || null;
@@ -297,3 +297,5 @@ module.exports = function orwell(Component, orwellSpec) {
 orwell.shouldComponentUpdate = function(fn) {
     __shouldComponentUpdateGlobal = fn;
 };
+
+module.exports = orwell;
