@@ -74,6 +74,8 @@ function __shouldComponentUpdateDeep(nextProps, nextState) {
     return !isEqual(this.state.currentProps, nextState.currentProps, cursorCompare);
 }
 
+let __shouldComponentUpdateGlobal = __shouldComponentUpdateShallow;
+
 module.exports = function orwell(Component, orwellSpec) {
 
     let watchCursors = orwellSpec.watchCursors || null;
@@ -109,7 +111,7 @@ module.exports = function orwell(Component, orwellSpec) {
 
     // globals
     let debug = false;
-    let __shouldComponentUpdate = __shouldComponentUpdateShallow;
+    let __shouldComponentUpdate = __shouldComponentUpdateGlobal;
     let OrwellContainer;
 
     let classSpec = {
@@ -290,4 +292,8 @@ module.exports = function orwell(Component, orwellSpec) {
     OrwellContainer = React.createClass(classSpec);
 
     return OrwellContainer;
+};
+
+orwell.shouldComponentUpdate = function(fn) {
+    __shouldComponentUpdateGlobal = fn;
 };
