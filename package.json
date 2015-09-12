@@ -25,14 +25,14 @@
   },
   "dependencies": {
     "lodash.assign": "^3.2.0",
-    "lodash.isarray": "^3.0.3",
+    "lodash.isarray": "^3.0.4",
     "lodash.isequal": "^3.0.4",
-    "lodash.isfunction": "^3.0.5",
-    "lodash.isplainobject": "^3.1.0",
-    "shallowequal": "^0.2.0"
+    "lodash.isfunction": "^3.0.6",
+    "lodash.isplainobject": "^3.2.0",
+    "shallowequal": "^0.2.2"
   },
   "devDependencies": {
-    "babel": "^5.5.6",
+    "babel": "^5.8.23",
     "chai": "^2.3.0",
     "mocha": "^2.2.5"
   }
