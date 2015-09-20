@@ -199,12 +199,16 @@ const orwell = function(Component, orwellSpec) {
         // any of those cursors change in some way.
         handleCursorChanged() {
 
-            if(shouldRewatchCursors.call(null, this.props, this.context)) {
+            const ctx = {
+                currentProps: this.state.currentProps
+            };
+
+            if(shouldRewatchCursors.call(ctx, this.props, this.context)) {
                 this.cleanWatchers();
                 this.watchCursors(this.props, this.context);
             }
 
-            if(!shouldAssignNewProps.call(null, this.props, this.context)) {
+            if(!shouldAssignNewProps.call(ctx, this.props, this.context)) {
                 return;
             }
             this.setState({
@@ -263,12 +267,16 @@ const orwell = function(Component, orwellSpec) {
 
         componentWillReceiveProps(nextProps, nextContext) {
 
-            if(shouldRewatchCursors.call(null, nextProps, nextContext)) {
+            const ctx = {
+                currentProps: this.state.currentProps
+            };
+
+            if(shouldRewatchCursors.call(ctx, nextProps, nextContext)) {
                 this.cleanWatchers();
                 this.watchCursors(nextProps, nextContext);
             }
 
-            if(!shouldAssignNewProps.call(null, nextProps, nextContext)) {
+            if(!shouldAssignNewProps.call(ctx, nextProps, nextContext)) {
                 return;
             }
             this.setState({
