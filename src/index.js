@@ -116,7 +116,7 @@ const orwell = function(Component, orwellSpec) {
 
     let classSpec = {
 
-        isMounted() {
+        __isMounted() {
             return !!this.mounted;
         },
 
@@ -150,7 +150,7 @@ const orwell = function(Component, orwellSpec) {
 
                 numberSubscribers++;
 
-                const cleanup = fn.call(null, this.handleCursorChanged, this.isMounted);
+                const cleanup = fn.call(null, this.handleCursorChanged, this.__isMounted);
                 if(cleanup && isFunction(cleanup)) {
                     unsubs.push(cleanup);
                 }
