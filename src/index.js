@@ -115,6 +115,11 @@ const orwell = function(Component, orwellSpec) {
     let OrwellContainer;
 
     let classSpec = {
+
+        isMounted() {
+            return !!this.mounted;
+        },
+
         assignNewProps(props, context) {
             const ret = assignNewProps.call(null, props, context);
             return isPlainObject(ret) ? ret : {};
@@ -145,7 +150,7 @@ const orwell = function(Component, orwellSpec) {
 
                 numberSubscribers++;
 
-                const cleanup = fn.call(null, this.handleCursorChanged);
+                const cleanup = fn.call(null, this.handleCursorChanged, this.isMounted);
                 if(cleanup && isFunction(cleanup)) {
                     unsubs.push(cleanup);
                 }
@@ -252,6 +257,9 @@ const orwell = function(Component, orwellSpec) {
         },
 
         getInitialState() {
+
+            this.mounted = true;
+
             return {
                 // array of functions to be called when OrwellContainer unmounts.
                 // these functions, when called, handle the cleanup step in removing
@@ -285,10 +293,12 @@ const orwell = function(Component, orwellSpec) {
         },
 
         componentWillMount() {
+            this.mounted = true;
             this.watchCursors(this.props, this.context);
         },
 
         componentWillUnmount() {
+            this.mounted = false;
             this.cleanWatchers();
         },
 
