@@ -176,7 +176,9 @@ const orwell = function(Component, orwellSpec) {
                     this.handleCursorChanged();
                 };
 
-                for(const cursor of cursorsToWatch) {
+                let len = cursorsToWatch.length;
+                while(len-- > 0) {
+                    const cursor = cursorsToWatch[len];
                     const unsub = cursor.observe(listener);
                     unsubs.push(unsub);
                 }
@@ -195,7 +197,14 @@ const orwell = function(Component, orwellSpec) {
 
         cleanWatchers() {
             const unsubs = this.state.unsubs || [];
-            for(const unsub of unsubs) {
+
+            if(!isArray(unsubs)) {
+                return;
+            }
+
+            let len = unsubs.length;
+            while(len-- > 0) {
+                const unsub = unsubs[len];
                 unsub.call(null);
             }
         },
