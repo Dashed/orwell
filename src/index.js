@@ -213,6 +213,10 @@ const orwell = function(Component, orwellSpec) {
         // any of those cursors change in some way.
         handleCursorChanged() {
 
+            if(!this.__isMounted()) {
+                return;
+            }
+
             const ctx = {
                 currentProps: this.state.currentProps
             };
